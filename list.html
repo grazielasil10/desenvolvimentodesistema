@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Alunos</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <a href="form.html">Voltar</a>
+
+    <div class="container">
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Nome do aluno</th>
+                    <th>E-mail do aluno</th>
+                    <th>Série</th>
+                    <th>Idade do Aluno</th>
+                    <th>Nome do professor(a)</th>
+
+                    <th>Ações</th> <!-- Coluna para os botões de ação -->
+                </tr>
+            </thead>
+            <tbody id="alunosTableBody">
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Função para excluir um item do localStorage e atualizar a tabela
+        function excluirCadastro(index) {
+            var data = JSON.parse(localStorage.getItem("formData")) || [];
+
+            // Remove o item do array de dados
+            data.splice(index, 1);
+
+            // Atualiza o localStorage com o novo array de dados
+            localStorage.setItem("formData", JSON.stringify(data));
+
+            // Atualiza a tabela na página
+            atualizarTabela();
+        }
+
+        // Função para atualizar a tabela na página com os dados do localStorage
+        function atualizarTabela() {
+            var data = JSON.parse(localStorage.getItem("formData")) || [];
+            var tableBody = document.getElementById("alunosTableBody");
+
+            // Limpa o conteúdo atual da tabela
+            tableBody.innerHTML = "";
+
+            // Adiciona cada item do localStorage como uma nova linha na tabela
+            data.forEach(function(item, index) {
+                var row = "<tr>" +
+                            "<td>" + item.name + "</td>" +
+                            "<td>" + item.email + "</td>" +
+                            "<td>" + item.subject + "</td>" +
+                            "<td>" + item.age + "</td>" +
+                            "<td>" + item.professor + "</td>" +
+
+                            '<td><button onclick="excluirCadastro(' + index + ')">Excluir</button></td>' + // Botão de exclusão
+                          "</tr>";
+                tableBody.innerHTML += row;
+            });
+        }
+
+        // Chamada inicial para carregar a tabela com os dados do localStorage
+        atualizarTabela();
+    </script>
+</body>
+</html>

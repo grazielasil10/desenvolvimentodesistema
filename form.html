@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desenvolvimento de Sistemas</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <a href="list.html">matricula cadastrada</a>
+
+    <div class="container">
+        <div class="form_box">
+            <h2 class="title">Sistema de Matrículas</h2>
+            <form id="form" action="list.html" method="get">
+                <input type="text" name="name" placeholder="Nome do aluno">
+                <input type="email" name="email" placeholder="E-mail do aluno">
+                <input type="text" name="subject" placeholder="Série">
+                <input type="text" name="age" placeholder="Idade do Aluno">
+                                <input type="text" name="professor" placeholder="Nome do professor(a)">
+
+                <button type="submit">Cadastrar Matricula</button>
+
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("form").addEventListener("submit", function(event) {
+            event.preventDefault();
+            
+            var formData = {
+                name: this.elements["name"].value,
+                email: this.elements["email"].value,
+                subject: this.elements["subject"].value,
+                age: this.elements["age"].value,
+                professor: this.elements["professor"].value
+            };
+            
+            // Salvando os dados no localStorage
+            var data = JSON.parse(localStorage.getItem("formData")) || [];
+            data.push(formData);
+            localStorage.setItem("formData", JSON.stringify(data));
+            
+            // Redirecionando para a segunda página
+            window.location.href = "list.html";
+        });
+    </script>
+</body>
+</html>
